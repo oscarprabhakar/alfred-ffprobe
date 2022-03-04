@@ -1,0 +1,33 @@
+{
+  "name": "alfred-ffprobe",
+  "version": "1.0.4",
+  "description": "An Alfred workflow for extracting and displaying media information using Ffprobe",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "postinstall": "alfy-init",
+    "preuninstall": "alfy-cleanup"
+  },
+  "author": "oscarprabhakar@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "alfred-config": "0.2.3",
+    "alfy": "0.12.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oscarprabhakar/alfred-ffprobe.git"
+  },
+  "keywords": [
+    "alfred",
+    "workflow",
+    "ffprobe",
+    "video",
+    "audio"
+  ],
+  "bugs": {
+    "url": "https://github.com/oscarprabhakar/alfred-ffprobe/issues"
+  },
+  "homepage": "https://github.com/oscarprabhakar/alfred-ffprobe#readme"
+}
