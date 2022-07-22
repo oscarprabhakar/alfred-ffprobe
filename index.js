@@ -39,7 +39,7 @@ const args = [
     '-hide_banner',
     '-show_error',
     '-show_entries',
-    'stream=duration,r_frame_rate,codec_name,codec_type,width,height,bitrate',
+    'stream=duration,r_frame_rate,codec_name,codec_type,width,height,bit_rate',
     '-v',
     'quiet',
     '-of',
@@ -52,10 +52,11 @@ const args = [
 const output =  await runner.run(ffprobePath, args)
 
 const buildStreamInfo = (stream) => {
-    const resolution = stream.width ? ` | ${stream.width}x${stream.height}` : ''
-    const duration = stream.duration? ` | ${parseFloat(stream.duration).toFixed(4)}s` : ''
-    const framerate = stream.r_frame_rate  && eval(stream.r_frame_rate) ? ` | ${parseFloat(eval(stream.r_frame_rate)).toFixed(2)}fps`: ''
-    return `[${stream.codec_type.toUpperCase()}]: ${stream.codec_name}${resolution}${duration}${framerate}`
+    const resolution = stream.width ? ` | ${stream.width}x${stream.height}` : '';
+    const duration = stream.duration? ` | ${parseFloat(stream.duration).toFixed(4)}s` : '';
+    const framerate = stream.r_frame_rate  && eval(stream.r_frame_rate) ? ` | ${parseFloat(eval(stream.r_frame_rate)).toFixed(2)}fps`: '';
+    const bitrate = stream.bit_rate? ` | ${parseFloat(stream.bit_rate/1024/1024).toFixed(2)}Mbps`: '';
+    return `[${stream.codec_type.toUpperCase()}]: ${stream.codec_name}${bitrate}${resolution}${duration}${framerate}`;
 }
 
 const streams = JSON.parse(output).streams
