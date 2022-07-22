@@ -1,7 +1,7 @@
 import alfy from 'alfy';
 import { spawn } from 'child_process';
-import { AudioStream, Stream, StreamType } from './types';
-import { createExecutor } from './process-executor';
+import { AudioStream, Stream, StreamType } from './types.js';
+import { createExecutor } from './process-executor.js';
 
 const runner = createExecutor({ spawn })
 const ffprobePath = '/usr/local/bin/ffprobe';

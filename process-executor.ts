@@ -1,4 +1,4 @@
-import { Dependencies, Executor, ProcessError } from "./types";
+import { Dependencies, Executor, ProcessError } from "./types.js";
 
 export const createExecutor = (dependencies: Dependencies): Executor => {
     const { spawn } = dependencies;
