@@ -46,8 +46,8 @@ function createExecutor(dependencies: Dependencies): Executor {
         async run(executablePath, args) {
             return new Promise((resolve, reject) => {
 
-                const errorOutput = [];
-                const output = [];
+                const errorOutput: string[] = [];
+                const output: string[] = [];
                 const process = spawn(executablePath, args);
 
                 process.once('error', reject);
@@ -60,7 +60,7 @@ function createExecutor(dependencies: Dependencies): Executor {
                 process.once('exit', (code) => {
                     if (code !== 0) {
                         const message = `Error in Process ${executablePath}. Exit code: ${code}`;
-                        const error = new ChildProcessError(message, errorOutput.join(''), output.join(''));
+                        const error = new ProcessError(message, errorOutput.join(''), output.join(''));
                         reject(error);
                     } else {
                         resolve(output.join(''));
