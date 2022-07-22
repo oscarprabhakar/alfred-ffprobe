@@ -87,8 +87,6 @@ const args = [
 ];
 
 
-const output = await runner.run(ffprobePath, args)
-
 const isAudioStream = (stream: Stream): stream is AudioStream => {
     return stream.hasOwnProperty('width');
 }
@@ -104,35 +102,43 @@ const buildStreamInfo = (stream: Stream) => {
     return `[${stream.codec_type.toUpperCase()}]: ${stream.codec_name}${bitrate}${resolution}${duration}${framerate}`;
 }
 
-const streams = JSON.parse(output).streams as Stream[]
-// console.log(streams)
-
-let audioCount = 0;
-let videoCount = 0;
-
 const getStreamCount = (streams: Stream[]) => (streamType: StreamType) => {
     return streams.filter(stream => stream.codec_type === streamType).length
 }
 
-const countStreams = getStreamCount(streams);
-const numberOfVideoStream = countStreams('video');
-const numberOfAudioStreams = countStreams('audio')
+const main = async (): Promise<void> => {
+    const output = await runner.run(ffprobePath, args)
 
-alfy.output(streams.map((stream) => {
-    let count = 0;
-    let subtitle = '';
+    const streams = JSON.parse(output).streams as Stream[]
+    // console.log(streams)
 
-    if (stream.codec_type === 'video') {
-        count = ++videoCount;
-        subtitle = `${count} of ${numberOfVideoStream} video track(s)`;
-    }
-    if (stream.codec_type === 'audio') {
-        count = ++audioCount;
-        subtitle = `${count} of ${numberOfAudioStreams} audio track(s)`;
-    }
+    let audioCount = 0;
+    let videoCount = 0;
 
-    return {
-        title: buildStreamInfo(stream),
-        subtitle
-    }
-}));
+    const countStreams = getStreamCount(streams);
+    const numberOfVideoStream = countStreams('video');
+    const numberOfAudioStreams = countStreams('audio')
+
+    alfy.output(streams.map((stream) => {
+        let count = 0;
+        let subtitle = '';
+
+        if (stream.codec_type === 'video') {
+            count = ++videoCount;
+            subtitle = `${count} of ${numberOfVideoStream} video track(s)`;
+        }
+        if (stream.codec_type === 'audio') {
+            count = ++audioCount;
+            subtitle = `${count} of ${numberOfAudioStreams} audio track(s)`;
+        }
+
+        return {
+            title: buildStreamInfo(stream),
+            subtitle
+        }
+    }));
+}
+
+
+main();
+
