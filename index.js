@@ -65,13 +65,13 @@ const streams = JSON.parse(output).streams
 let audioCount = 0;
 let videoCount = 0;
 
-const getTotal = (streams)=>(streamType) => {
+const getStreamCount = (streams)=>(streamType) => {
     return streams.filter(stream => stream.codec_type === streamType).length
 }
 
-const totalOf = getTotal(streams);
-const totalVideo = totalOf('video');
-const totalAudio = totalOf('audio')
+const countStreams = getStreamCount(streams);
+const numberOfVideoStream = countStreams('video');
+const numberOfAudioStreams = countStreams('audio')
 
 alfy.output(streams.map((stream) => {
     let count = 0;
@@ -79,11 +79,11 @@ alfy.output(streams.map((stream) => {
 
     if(stream.codec_type === 'video') { 
         count = ++videoCount;
-        subtitle = `${count} of ${totalVideo} video track(s)`;
+        subtitle = `${count} of ${numberOfVideoStream} video track(s)`;
     }
     if(stream.codec_type === 'audio' ){ 
         count = ++audioCount;
-        subtitle = `${count} of ${totalAudio} audio track(s)`;
+        subtitle = `${count} of ${numberOfAudioStreams} audio track(s)`;
     }  
 
     return {
