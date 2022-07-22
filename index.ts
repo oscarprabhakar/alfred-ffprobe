@@ -24,6 +24,19 @@ export interface VideoStream {
     bit_rate: string;
 }
 
+export class ProcessError extends Error {
+    public readonly stdout: string;
+
+    public readonly stderr: string;
+
+    constructor(message: string, stderr: string, stdout: string) {
+        super(message);
+        this.stderr = stderr;
+        this.stdout = stdout;
+    }
+}
+
+
 export type StreamType = 'video' | 'audio';
 
 function createExecutor(dependencies: Dependencies): Executor {
